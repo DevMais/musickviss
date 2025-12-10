@@ -1,0 +1,7 @@
+# Local development environment variables
+# Copy this to .dev.vars (not committed to git)
+# Wrangler will automatically load .dev.vars for local development
+
+SPOTIFY_CLIENT_ID=your-spotify-client-id
+SPOTIFY_CLIENT_SECRET=your-spotify-client-secret
+

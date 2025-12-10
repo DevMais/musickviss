@@ -1,0 +1,25 @@
+name = "music-quiz"
+compatibility_date = "2023-11-21"
+pages_build_output_dir = "dist"
+
+[env.production]
+name = "music-quiz"
+
+[[durable_objects.bindings]]
+name = "GAME_ROOM"
+class_name = "GameRoom"
+script_name = "music-quiz"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["GameRoom"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "music-quiz-db"
+database_id = "your-database-id-here"
+
+# For production, use: wrangler secret put SPOTIFY_CLIENT_ID
+# and: wrangler secret put SPOTIFY_CLIENT_SECRET
+# Do NOT put secrets in this file!
+
