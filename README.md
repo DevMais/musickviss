@@ -48,12 +48,24 @@ npm run dev
 ```
 
 7. Deploy to Cloudflare Pages:
+
+**Option 1: Git Integration (Recommended)**
+- In Cloudflare Pages dashboard:
+  - Connect your Git repository
+  - Build command: `npm run build`
+  - Output directory: `dist`
+  - **Leave "Deploy command" EMPTY** (Cloudflare auto-deploys after build)
+
+**Option 2: Manual Deploy**
 ```bash
 npm run build
 npm run deploy
 ```
 
-**Important:** Make sure you're using `npm run deploy` (which runs `wrangler pages deploy`), not `wrangler deploy` directly. The latter is for Workers, not Pages.
+**Important:** 
+- If using Git integration, **DO NOT set a deploy command** in the dashboard
+- If deploying manually, use `npm run deploy` (runs `wrangler pages deploy`)
+- Never use `wrangler deploy` directly - that's for Workers, not Pages
 
 Before deploying, make sure to:
 - Set secrets in Cloudflare: `wrangler secret put SPOTIFY_CLIENT_ID` and `wrangler secret put SPOTIFY_CLIENT_SECRET`

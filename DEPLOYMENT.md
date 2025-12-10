@@ -23,6 +23,19 @@
 
 ## Deployment
 
+### Option 1: Git Integration (Recommended)
+
+1. **In Cloudflare Pages Dashboard**:
+   - Connect your Git repository
+   - Set build command: `npm run build`
+   - Set output directory: `dist`
+   - **IMPORTANT**: Leave "Deploy command" EMPTY or remove it
+   - Cloudflare Pages will automatically deploy the `dist` folder after build
+
+2. **Push to your repository** - Cloudflare will automatically build and deploy
+
+### Option 2: Manual Deploy
+
 1. **Build the project**:
    ```bash
    npm run build
@@ -33,10 +46,10 @@
    npm run deploy
    ```
 
-   Or use the Cloudflare dashboard:
-   - Connect your Git repository
-   - Set build command: `npm run build`
-   - Set output directory: `dist`
+   Or directly:
+   ```bash
+   npx wrangler pages deploy dist
+   ```
 
 ## Post-Deployment
 
