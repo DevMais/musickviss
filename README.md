@@ -53,6 +53,12 @@ npm run build
 npm run deploy
 ```
 
+**Important:** Make sure you're using `npm run deploy` (which runs `wrangler pages deploy`), not `wrangler deploy` directly. The latter is for Workers, not Pages.
+
+Before deploying, make sure to:
+- Set secrets in Cloudflare: `wrangler secret put SPOTIFY_CLIENT_ID` and `wrangler secret put SPOTIFY_CLIENT_SECRET`
+- Update the `database_id` in `wrangler.toml` if you're using D1
+
 ## Project Structure
 
 - `src/` - React frontend components

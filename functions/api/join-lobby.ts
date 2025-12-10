@@ -17,14 +17,22 @@ export async function onRequestPost(context: {
     });
   }
 
-  // Check if lobby exists
-  const lobby = await env.DB.prepare(
-    `SELECT * FROM lobbies WHERE session_code = ?`
-  )
-    .bind(sessionCode.toUpperCase())
-    .first();
+  // Check if lobby exists (if DB is available)
+  let lobby = null;
+  try {
+    lobby = await env.DB.prepare(
+      `SELECT * FROM lobbies WHERE session_code = ?`
+    )
+      .bind(sessionCode.toUpperCase())
+      .first();
+  } catch (error) {
+    // If DB is not set up, continue without DB check
+    console.warn('DB not available, skipping lobby check:', error);
+  }
 
-  if (!lobby) {
+  // If DB is set up and lobby not found, return error
+  // Otherwise, continue (lobby might exist in Durable Object)
+  if (env.DB && !lobby) {
     return new Response(JSON.stringify({ error: 'Lobby not found' }), {
       status: 404,
       headers: { 'Content-Type': 'application/json' },
@@ -63,7 +71,11 @@ export async function onRequestPost(context: {
       wsUrl,
     }),
     {
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      },
     }
   );
 }

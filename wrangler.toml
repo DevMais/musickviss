@@ -2,9 +2,7 @@ name = "music-quiz"
 compatibility_date = "2023-11-21"
 pages_build_output_dir = "dist"
 
-[env.production]
-name = "music-quiz"
-
+# Durable Objects configuration for Pages
 [[durable_objects.bindings]]
 name = "GAME_ROOM"
 class_name = "GameRoom"
@@ -14,6 +12,8 @@ script_name = "music-quiz"
 tag = "v1"
 new_classes = ["GameRoom"]
 
+# D1 Database configuration
+# Update database_id after creating: npx wrangler d1 create music-quiz-db
 [[d1_databases]]
 binding = "DB"
 database_name = "music-quiz-db"

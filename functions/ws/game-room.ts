@@ -1,4 +1,4 @@
-import type { GameState, Player, Track, Answer, LobbySettings } from '../../src/types/game';
+import type { GameState, Player, Track, Answer, LobbySettings } from '../types/game';
 
 export class GameRoom implements DurableObject {
   private state: DurableObjectState;
@@ -120,8 +120,15 @@ export class GameRoom implements DurableObject {
 
     const { musicSelection, numSongs } = this.gameState.settings;
 
-    // In production, fetch tracks from Spotify API via internal function call
-    // For now, create mock tracks for testing
+    // Try to load tracks from storage first (in case they were pre-loaded)
+    const storedTracks = await this.state.storage.get('tracks') as Track[] | undefined;
+    if (storedTracks && storedTracks.length > 0) {
+      return; // Tracks already loaded
+    }
+
+    // For now, create mock tracks
+    // In production, tracks should be loaded via the Spotify search API
+    // before starting the game (called from create-lobby or a separate endpoint)
     const tracks: Track[] = Array.from({ length: numSongs }, (_, i) => ({
       id: `track-${i}`,
       name: `Song ${i + 1}`,
@@ -131,7 +138,6 @@ export class GameRoom implements DurableObject {
       options: [],
     }));
     
-    // Store tracks in Durable Object storage
     await this.state.storage.put('tracks', tracks);
   }
 

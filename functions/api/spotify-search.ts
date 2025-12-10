@@ -78,7 +78,11 @@ export async function onRequestPost(context: {
       }));
 
   return new Response(JSON.stringify({ tracks }), {
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    },
   });
 }
 

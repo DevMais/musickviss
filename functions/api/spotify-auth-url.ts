@@ -19,7 +19,11 @@ export async function onRequestGet(context: {
   })}`;
 
   return new Response(JSON.stringify({ url: authUrl }), {
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    },
   });
 }
 
